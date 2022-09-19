@@ -1,12 +1,17 @@
 <?php
 $insert=false;
 if(isset($_POST['name'])){
+    //Set connection variables
      $server = "localhost";
      $username = "root";
      $password = "";
+
+     //Create a db connection
      $con = mysqli_connect($server, $username, $password);
+
+     //Check for connection success
      if(!$con){
-        die("connection to this db failed due to".mysqli_connect_error());
+        die("connection to this db failed due to" . mysqli_connect_error());
     }
     // echo "Success connecting to the db";
 
@@ -20,13 +25,18 @@ if(isset($_POST['name'])){
     $sql="INSERT INTO `trip`.`trip` (`name`, `age`, `gender`, `email`, `phone`, `other`, `dt`) VALUES ('$name', '$age', '$gender', '$email', '$phone', '$desc', current_timestamp());";
     // echo $sql;
 
+    //Execute the query
     if($con->query($sql) == true){
         // echo "Successfully inserted";
+
+        //Flag for successful insertion
         $insert=true;
     }
     else{
         echo "ERROR: $sql <br> $con->error";
     }
+    
+    //Close the db connection
     $con->close();
 }
 ?>
@@ -48,7 +58,7 @@ if(isset($_POST['name'])){
         <p>Enter your details and submit this form to confirm your participation in the trip </p>
         <?php
         if($insert == true){
-        echo "<p class='submitMsg'><center>Thanks for submitting your form. We are happy to see you joining us for the US trip</center></p>";
+        echo "<p class='submitMsg'>Thanks for submitting your form. We are happy to see you joining us for the US trip</p>";
         }
         ?>
         <form action="index.php" method="post">
